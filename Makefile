@@ -46,4 +46,6 @@ clean:
 fclean: clean
 	@rm -rf $(TARGET)
 
+re: fclean all
+
 -include $(DEPS)
