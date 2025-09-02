@@ -22,7 +22,12 @@ debug:
 	@echo $(DEPS)
 
 ${TARGET}: ${OBJS}
-	${CC} ${OBJS} -o ${TARGET}
+	@if ${CC} ${OBJS} -o ${TARGET} ${LDLIBS} >/dev/null 2>&1; then \
+		printf "\n\e[38;2;0;229;232m Compilation \e[0m $(TARGET) \e[38;2;84;213;52m	\e[75G OK\n\e[0m"; \
+	else \
+		printf "\n\e[38;2;0;229;232m Compilation \e[0m $(TARGET) \e[38;2;213;84;52m	\e[75G KO\n\e[0m"; \
+		${CC} ${OBJS} -o ${TARGET} ${LDLIBS}>/dev/null; \
+	fi
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(dir $@) >/dev/null
